@@ -64,13 +64,13 @@
     <main role="main" class="container pageContent">
         <div class="row">
             <div class="col-md-9">
-                {% if messages %}
+                {% comment %} {% if messages %}
                 {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
                     {{ message }}
                 </div>
                 {% endfor %}
-                {% endif %}
+                {% endif %} {% endcomment %}
                 {% block content %}{% endblock %}
             </div>
             <div class="col-md-3">

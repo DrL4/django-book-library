@@ -2,10 +2,18 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <h3>Update your account</h3>
-<form method="post" class="formsWidth" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-success">Update</button>
-</form>
+<div class="content-section">
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Profile Info</legend>
+        {{ u_form|crispy }}
+        {{ p_form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Update</button>
+      </div>
+    </form>
+  </div>
 <a href="{% url 'UserProfile' %}"><button class="btn btn-warning profile_buttons">Return</button></a>
 {% endblock content %}

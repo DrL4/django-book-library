@@ -9,10 +9,16 @@ from books.models import Book
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    classroom = models.CharField(max_length=10)
+    branch = models.CharField(max_length=10)
+    roll_no = models.CharField(max_length=3, blank=True)
+    phone = models.CharField(max_length=10, blank=True)
     image = models.ImageField(default='default.png', upload_to='profile_pics')
 
+    # def __str__(self):
+    #     return f'{self.user.username} Profile'
     def __str__(self):
-        return f'{self.user.username} Profile'
+        return str(self.user) + " ["+str(self.branch)+']' + " ["+str(self.classroom)+']' + " ["+str(self.roll_no)+']'
 
     def save(self, **kwargs):
         super().save()

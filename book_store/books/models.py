@@ -28,6 +28,7 @@ class Book(models.Model):
     description = models.TextField(max_length=1000, default="About book")
     image = models.ImageField(
         default='default_book.png', upload_to='books_pics')
+    pdf = models.FileField(default='canevasRapportdeStage.pdf', upload_to='bookapp/pdfs/')
     author = models.CharField(max_length=100)
     book_amount = models.IntegerField()
     publish_date = models.DateField()
@@ -37,6 +38,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def delete(self, *args, **kwargs):
+        self.pdf.delete()
+        self.image.delete()
+        super().delete(*args, **kwargs)  
 
     @property
     def actual_rating(self):
@@ -67,12 +73,12 @@ class Book(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
-
+from users.models import Profile
 class BookRentHistory(models.Model):
     book = models.ForeignKey(
         Book, on_delete=models.PROTECT, editable=False)
     user = models.ForeignKey(
-        User, on_delete=models.PROTECT, editable=False, related_name='books')
+        Profile, on_delete=models.PROTECT, editable=False, related_name='books')
     rent_date = models.DateField(auto_now_add=True, editable=False)
     back_date = models.DateField(
         default=datetime.now()+timedelta(days=30))
